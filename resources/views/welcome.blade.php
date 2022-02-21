@@ -24,6 +24,12 @@
     </head>
     <body class="antialiased">
 
+        <div class="container py-10">
+            
+                <a href="{{ route('crud') }}">Crude Page</a>
+          
+        </div>
+       
 
          @yield('content')
         

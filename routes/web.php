@@ -19,6 +19,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-route::get('/crud-page',[StudentController::class,'index']);
-route::post('/saveData',[StudentController::class,'store']);
-route::get('/fetching-data',[StudentController::class,'fetchingData']);
+route::get('/crud-page',[StudentController::class,'index'])->name('crud');
+route::post('/saveData',[StudentController::class,'store'])->name('savingData');
+route::get('/fetching-data',[StudentController::class,'fetchingData'])->name('fetchData');
+route::get('edit-student/{id}',[StudentController::class,'edit']);
+route::put('update-data/{id}',[StudentController::class,'update']);

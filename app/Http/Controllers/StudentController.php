@@ -25,7 +25,7 @@ class StudentController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',  //name age and number are coming from Jquery data (left side)
-            'age' => 'required|string',
+            'age' => 'required|numeric',
             'number' => 'required|numeric',
         ]);
 
@@ -46,6 +46,59 @@ class StudentController extends Controller
                 'status'=>200,
                 'message'=>'Data added successfully!'
             ]);
+        }
+    }
+
+    public function edit($id){
+        $get_Data = Student::find($id);
+        
+        if($get_Data){
+            
+            return response()->json([
+                'status' =>200,
+                'studentData'=>$get_Data
+            ]);
+        }else{
+            return response()->json([
+                'status'=>404,
+                'message' =>'Student not found'
+            ]);
+        }
+
+    }
+    public function update(Request $request,$id){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',  //name age and number are coming from Jquery data (left side)
+            'age' => 'required|numeric',
+            'number' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'=>400,
+                'error'=>$validator->messages(),
+            ]);
+           
+
+        } else {
+            $student =Student::find($id);
+            if($student){
+                $student->name = $request->input('name');  //input('name') > name is coming from ajax data left side  and  $student->name , name is DB column
+                $student->age = $request->input('age');
+                $student->number = $request->input('number');
+                $student->update();
+                return response()->json([
+                    'status'=>200,
+                    'message'=>'Data updated successfully!'
+                ]);
+            }else{
+                return response()->json([
+                    'status'=>404,
+                    'message' =>'Student not found'
+                ]);
+            }
+    
+
         }
     }
 }
